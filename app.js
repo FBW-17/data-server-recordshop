@@ -1,7 +1,6 @@
 /** EXTERNAL DEPENDENCIES */
 const express = require('express');
 const path = require('path');
-const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
@@ -15,6 +14,7 @@ const recordsRouter = require('./routes/records');
 const app = express();
 
 /** LOGGING */
+/* THIS LINE LOGS ALL REQUESTS MADE TO OUR API TO THE CONSOLE */
 app.use(logger('dev'));
 
 
@@ -27,7 +27,6 @@ db.defaults({ records:[] }).write();
 /** REQUEST PARSERS */
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 
 /** STATIC FILES*/
 app.use(express.static(path.join(__dirname, 'public')));
