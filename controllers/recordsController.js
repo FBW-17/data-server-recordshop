@@ -12,7 +12,7 @@ exports.getRecords = (req, res, next) => {
 
 
 exports.addRecord = (req, res, next) => {
-    const record = req.body;
+    let record = req.body;
     record.id = uuid()
     db.get('records')
     .push(record)
