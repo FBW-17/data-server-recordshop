@@ -2,6 +2,7 @@ const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const adapter = new FileSync('data/db.json');
 const db = low(adapter);
+const uuid = require("uuid/v1")
 
 
 exports.getRecords = (req, res, next) => {
@@ -12,10 +13,10 @@ exports.getRecords = (req, res, next) => {
 
 exports.addRecord = (req, res, next) => {
     const record = req.body;
-    db.get('records').push(record)
-        .last()
-        .assign({ id: Date.now().toString() })
-        .write()
+    record.id = uuid()
+    db.get('records')
+    .push(record)
+    .write()
 
     res.status(200).send(record);
 }
