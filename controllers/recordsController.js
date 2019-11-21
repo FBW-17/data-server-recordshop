@@ -5,18 +5,31 @@ const db = low(adapter);
 const uuid = require("uuid/v1")
 
 
-exports.getRecords = (req, res, next) => {
+const getRecords = (req, res) => {
     const records = db.get('records').value()
     res.status(200).send(records);
 }
 
+const getRecordAddForm = (req, res) => {
+    res.send(`
+        <form action="/api/records/" method="POST" autocomplete="off">
+            <input name="title" type="text">
+            <button type="submit">Add record</button>
+        </form>
+    `)
+}
 
-exports.addRecord = (req, res, next) => {
+const addRecord = (req, res) => {
     let record = req.body;
     record.id = uuid()
+
+    // add the record to the DB
     db.get('records')
     .push(record)
     .write()
 
     res.status(200).send(record);
 }
+
+
+module.exports = { getRecordAddForm, getRecords, addRecord }
